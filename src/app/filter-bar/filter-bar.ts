@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Component, computed, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -53,3 +54,14 @@ export class FilterBar {
     this.filterChanged.emit({ estilo: null, tono: null, texto: '' });
   }
 }
+=======
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-filter-bar',
+  imports: [],
+  templateUrl: './filter-bar.html',
+  styleUrl: './filter-bar.scss',
+})
+export class FilterBar {}
+>>>>>>> 970751d771931d307a8d7d739c9e5eca2fce287a

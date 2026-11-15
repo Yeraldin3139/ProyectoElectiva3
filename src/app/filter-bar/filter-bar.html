@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <section class="filter-bar" aria-label="Filtros del catálogo">
   <div class="filter-group">
     <span class="filter-label" id="estilo-label">Estilo</span>
@@ -36,3 +37,30 @@
     }
   </div>
 </section>
+=======
+<aside class="filter-panel" aria-labelledby="filters-title">
+  <h2 id="filters-title">Filtros</h2>
+  <form>
+    <fieldset>
+      <legend>Categoría</legend>
+      <label><input type="checkbox" name="category"> Accesorios</label>
+      <label><input type="checkbox" name="category"> Hogar</label>
+      <label><input type="checkbox" name="category"> Tecnología</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Precio</legend>
+      <label for="min-price">Mínimo</label>
+      <input id="min-price" type="number" placeholder="0" min="0">
+      <label for="max-price">Máximo</label>
+      <input id="max-price" type="number" placeholder="500" min="0">
+    </fieldset>
+
+    <fieldset>
+      <legend>Disponibilidad</legend>
+      <label><input type="checkbox" name="availability"> En existencia</label>
+    </fieldset>
+  </form>
+</aside>
+<p>filter-bar works!</p>
+>>>>>>> 970751d771931d307a8d7d739c9e5eca2fce287a

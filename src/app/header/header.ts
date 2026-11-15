@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -102,3 +103,14 @@ export class Header {
     }
   }
 }
+=======
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-header',
+  imports: [],
+  templateUrl: './header.html',
+  styleUrl: './header.scss',
+})
+export class Header {}
+>>>>>>> 970751d771931d307a8d7d739c9e5eca2fce287a

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="app-container">
   <app-header></app-header>
 
@@ -10,3 +11,130 @@
 
 <!-- Notificaciones de PrimeNG (inicio de sesión, tareas, diseños) -->
 <p-toast position="top-right" [breakpoints]="{ '640px': { width: '92vw', right: '4vw', left: '4vw' } }" />
+=======
+<div class="catalog-page">
+  <header class="site-header" id="inicio">
+    <a class="brand" href="#inicio" aria-label="Inicio del catálogo">Catálogo<span>Digital</span></a>
+
+    <nav class="main-menu" aria-label="Navegación principal">
+      <a href="#inicio">Inicio</a>
+      <a href="#productos">Productos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+
+    <form class="search" role="search">
+      <label class="visually-hidden" for="catalog-search">Buscar productos</label>
+      <input id="catalog-search" type="search" placeholder="Buscar productos...">
+      <button type="submit">Buscar</button>
+    </form>
+  </header>
+
+  <main class="catalog-layout">
+    <aside class="filter-panel" aria-labelledby="filters-title">
+      <h2 id="filters-title">Filtros</h2>
+      <form>
+        <fieldset>
+          <legend>Categoría</legend>
+          <label><input type="checkbox" name="category"> Accesorios</label>
+          <label><input type="checkbox" name="category"> Hogar</label>
+          <label><input type="checkbox" name="category"> Tecnología</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Precio</legend>
+          <label for="min-price">Mínimo</label>
+          <input id="min-price" type="number" placeholder="0" min="0">
+          <label for="max-price">Máximo</label>
+          <input id="max-price" type="number" placeholder="500" min="0">
+        </fieldset>
+
+        <fieldset>
+          <legend>Disponibilidad</legend>
+          <label><input type="checkbox" name="availability"> En existencia</label>
+        </fieldset>
+      </form>
+    </aside>
+
+    <section class="product-section" id="productos" aria-labelledby="products-title">
+      <div class="section-heading">
+        <h1 id="products-title">Productos destacados</h1>
+        <p>Explora nuestra selección del catálogo.</p>
+      </div>
+
+      <div class="product-grid">
+        <article class="product-card">
+          <img src="https://placehold.co/480x360?text=Producto+1" alt="Imagen del Producto uno">
+          <div class="product-info">
+            <h2>Producto uno</h2>
+            <p class="price">$29.99</p>
+            <a class="button" href="#detalle">Ver producto</a>
+          </div>
+        </article>
+        <article class="product-card">
+          <img src="https://placehold.co/480x360?text=Producto+2" alt="Imagen del Producto dos">
+          <div class="product-info">
+            <h2>Producto dos</h2>
+            <p class="price">$42.50</p>
+            <a class="button" href="#detalle">Ver producto</a>
+          </div>
+        </article>
+        <article class="product-card">
+          <img src="https://placehold.co/480x360?text=Producto+3" alt="Imagen del Producto tres">
+          <div class="product-info">
+            <h2>Producto tres</h2>
+            <p class="price">$18.00</p>
+            <a class="button" href="#detalle">Ver producto</a>
+          </div>
+        </article>
+        <article class="product-card">
+          <img src="https://placehold.co/480x360?text=Producto+4" alt="Imagen del Producto cuatro">
+          <div class="product-info">
+            <h2>Producto cuatro</h2>
+            <p class="price">$56.90</p>
+            <a class="button" href="#detalle">Ver producto</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <section class="product-detail" id="detalle" aria-labelledby="detail-title">
+    <div class="product-image">
+      <img src="https://placehold.co/800x700?text=Producto+destacado" alt="Imagen ampliada del producto destacado">
+    </div>
+    <div class="product-copy">
+      <p class="eyebrow">Catálogo / Categoría</p>
+      <h2 id="detail-title">Detalle del producto destacado</h2>
+      <p class="detail-price">$49.99</p>
+      <p class="description">Descripción breve del producto. Aquí se pueden presentar sus características principales, materiales y detalles de uso.</p>
+      <p class="availability">Disponibilidad: en existencia</p>
+      <button type="button">Comprar</button>
+    </div>
+  </section>
+
+  <footer class="site-footer" id="contacto">
+    <section class="footer-column">
+      <h2>Contacto</h2>
+      <p>Correo: contacto@catalogodigital.com</p>
+      <p>Teléfono: +1 555 123 4567</p>
+    </section>
+    <section class="footer-column">
+      <h2>Redes sociales</h2>
+      <nav aria-label="Redes sociales">
+        <a href="#facebook">Facebook</a>
+        <a href="#instagram">Instagram</a>
+        <a href="#linkedin">LinkedIn</a>
+      </nav>
+    </section>
+    <section class="footer-column">
+      <h2>Políticas</h2>
+      <nav aria-label="Políticas del sitio">
+        <a href="#privacidad">Privacidad</a>
+        <a href="#devoluciones">Devoluciones</a>
+        <a href="#terminos">Términos y condiciones</a>
+      </nav>
+    </section>
+    <p class="copyright">© 2026 Catálogo Digital. Todos los derechos reservados.</p>
+  </footer>
+</div>
+>>>>>>> 970751d771931d307a8d7d739c9e5eca2fce287a
