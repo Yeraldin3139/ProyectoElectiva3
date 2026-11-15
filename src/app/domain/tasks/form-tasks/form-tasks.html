@@ -1,0 +1,47 @@
+<form class="panel form-tasks" [ngClass]="{ editing: tareaEnEdicion }" [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+  <span class="eyebrow">{{ tareaEnEdicion ? 'Editando tarea' : 'Nueva tarea' }}</span>
+  <h2>{{ tareaEnEdicion ? 'Actualiza los datos' : 'Agregar al taller' }}</h2>
+
+  <div class="field">
+    <label for="ft-title">Título</label>
+    <input pInputText id="ft-title" placeholder="Ej. Cambiar cinta del vueltiao" formControlName="title" [fluid]="true" />
+    @if (hasError('title', 'required')) {
+      <small class="field-error">El título es obligatorio.</small>
+    }
+    @if (hasError('title', 'minlength')) {
+      <small class="field-error">Escribe al menos 3 caracteres.</small>
+    }
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label for="ft-priority">Prioridad</label>
+      <p-select inputId="ft-priority" formControlName="priority" [options]="priorityOptions" optionLabel="label" optionValue="value" placeholder="Selecciona…" [fluid]="true" />
+      @if (hasError('priority', 'required')) {
+        <small class="field-error">Elige una prioridad.</small>
+      }
+    </div>
+
+    <div class="field">
+      <label for="ft-category">Categoría</label>
+      <p-select inputId="ft-category" formControlName="category" [options]="categories" [fluid]="true" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="ft-date">Entrega</label>
+    <p-datepicker inputId="ft-date" formControlName="dueDate" dateFormat="dd/mm/yy" [showIcon]="true" [showButtonBar]="true" placeholder="dd/mm/aaaa" [fluid]="true" />
+  </div>
+
+  <div class="field">
+    <label for="ft-description">Descripción (opcional)</label>
+    <textarea pTextarea id="ft-description" rows="3" formControlName="description" [fluid]="true"></textarea>
+  </div>
+
+  <div class="actions">
+    @if (tareaEnEdicion) {
+      <button pButton type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancelar()"></button>
+    }
+    <button pButton type="submit" [icon]="tareaEnEdicion ? 'pi pi-check' : 'pi pi-plus'" [label]="tareaEnEdicion ? 'Guardar cambios' : 'Agregar tarea'"></button>
+  </div>
+</form>

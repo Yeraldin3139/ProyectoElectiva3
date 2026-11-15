@@ -1,0 +1,89 @@
+<div class="page-bg">
+  <div class="page-shell">
+    <header class="page-hero">
+      <span class="eyebrow">Panel de gestión · Tareas</span>
+      <h1>Tareas del taller</h1>
+      <p>
+        Lo que hay que hacer en el taller y la tienda. El formulario y cada tarjeta son componentes hijos
+        que se comunican con esta página. También puedes verla como lista en
+        <a routerLink="/pendientes" class="text-link">Pendientes</a>.
+      </p>
+    </header>
+
+    <section class="summary-grid" aria-label="Resumen de tareas">
+      <article class="summary-card">
+        <span class="summary-number">{{ total() }}</span>
+        <span class="summary-label">Total</span>
+      </article>
+      <article class="summary-card is-pending">
+        <span class="summary-number">{{ pendingCount() }}</span>
+        <span class="summary-label">Pendientes</span>
+      </article>
+      <article class="summary-card is-done">
+        <span class="summary-number">{{ completedCount() }}</span>
+        <span class="summary-label">Completadas</span>
+      </article>
+    </section>
+
+    <div class="layout">
+      <aside class="side">
+        <!-- Hijo 1: formulario. Recibe la tarea a editar y emite guardar / cancelar -->
+        <app-form-tasks
+          [tareaEnEdicion]="tareaEnEdicion()"
+          (guardarTarea)="onGuardarTarea($event)"
+          (cancelarEdicion)="onCancelarEdicion()"
+        ></app-form-tasks>
+
+        <section class="panel log" aria-live="polite">
+          <span class="eyebrow">Actividad reciente</span>
+          <h2>Últimos cambios</h2>
+          @if (mensajes().length === 0) {
+            <p class="log-empty">Aquí verás los cambios que hagas en las tareas.</p>
+          } @else {
+            <ol>
+              <li *ngFor="let mensaje of mensajes()">
+                <time>{{ mensaje.hora }}</time>
+                <span>{{ mensaje.texto }}</span>
+              </li>
+            </ol>
+          }
+        </section>
+      </aside>
+
+      <section class="panel tasks">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Mis tareas</span>
+            <h2>Listado</h2>
+          </div>
+
+          <div class="filters" role="group" aria-label="Filtros de tareas">
+            <button class="filter-chip" type="button" [ngClass]="{ active: filter() === 'all' }" (click)="filter.set('all')">Todas</button>
+            <button class="filter-chip" type="button" [ngClass]="{ active: filter() === 'pending' }" (click)="filter.set('pending')">Pendientes</button>
+            <button class="filter-chip" type="button" [ngClass]="{ active: filter() === 'completed' }" (click)="filter.set('completed')">Completadas</button>
+          </div>
+        </div>
+
+        <div class="task-list">
+          <!-- Hijo 2: una tarjeta por tarea, con datos por @Input y eventos por @Output -->
+          <app-item-task
+            *ngFor="let todo of tareasFiltradas(); trackBy: trackById"
+            [title]="todo.title"
+            [description]="todo.description"
+            [priority]="todo.priority"
+            [category]="todo.category"
+            [dueDate]="todo.dueDate"
+            [completed]="!!todo.isCompleted"
+            (eliminarTarea)="delete(todo, $event)"
+            (editarTarea)="editar(todo)"
+            (cambiarEstado)="cambiarEstado(todo, $event)"
+          ></app-item-task>
+
+          @if (tareasFiltradas().length === 0) {
+            <div class="empty-state">No hay tareas en este filtro.</div>
+          }
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

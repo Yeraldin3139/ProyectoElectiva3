@@ -1,0 +1,15 @@
+<div class="catalog-page">
+  <div class="catalog-inner">
+    <header class="catalog-header">
+      <span class="eyebrow">Catálogo</span>
+      <h1>Nuestros sombreros</h1>
+      <p>Filtra por estilo y tono, o busca por nombre desde la barra superior.</p>
+    </header>
+
+    <!-- Hijo 1: filtros. Recibe los filtros actuales y avisa cuando cambian -->
+    <app-filter-bar [filtros]="filtros()" (filterChanged)="onFilterChanged($event)"></app-filter-bar>
+
+    <!-- Hijo 2: grilla. Recibe los filtros y pide limpiarlos cuando no hay resultados -->
+    <app-product-grid [filterCriteria]="filtros()" (limpiar)="limpiarFiltros()"></app-product-grid>
+  </div>
+</div>

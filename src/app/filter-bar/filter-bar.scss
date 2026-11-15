@@ -1,17 +1,72 @@
-$border-color: #dedede;
-$text-color: #252525;
-
-.filter-panel {
-  padding: 1rem;
-  color: $text-color;
-  border: 1px solid $border-color;
-  border-radius: 4px;
+.filter-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 18px 20px;
   background: #fff;
+  border: 1px solid var(--sc-border);
+  border-radius: 16px;
+  box-shadow: var(--sc-shadow);
+}
 
-  h2 { margin: 0 0 1rem; font-size: 1.15rem; }
-  form { display: flex; flex-direction: column; gap: 1rem; }
-  fieldset { display: flex; flex-direction: column; gap: .5rem; padding: 0; border: 0; }
-  legend { margin-bottom: .5rem; font-weight: 700; }
-  label { display: flex; align-items: center; gap: .45rem; }
-  input[type='number'] { width: 100%; padding: .5rem; border: 1px solid $border-color; }
+.filter-group {
+  display: grid;
+  gap: 6px;
+}
+
+.filter-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sc-muted);
+}
+
+:host ::ng-deep .tone-select {
+  min-width: 200px;
+}
+
+.filter-extra {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .filter-group,
+  .filter-extra {
+    width: 100%;
+  }
+
+  .filter-extra {
+    margin-left: 0;
+  }
+
+  :host ::ng-deep .tone-select {
+    width: 100%;
+  }
+
+  .filter-bar {
+    padding: 14px;
+  }
+
+  // Los 4 estilos comparten el ancho de la pantalla en el celular
+  :host ::ng-deep .p-selectbutton {
+    display: flex;
+    width: 100%;
+
+    .p-togglebutton {
+      flex: 1;
+      min-width: 0;
+      padding-inline: 2px;
+      font-size: 0.88rem;
+    }
+
+    .p-togglebutton-content {
+      padding-inline: 6px;
+    }
+  }
 }

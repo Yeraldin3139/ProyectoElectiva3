@@ -1,0 +1,34 @@
+<article class="task-card" [ngClass]="{ completed: completed, overdue: vencida }">
+  <div class="task-check">
+    <p-checkbox [inputId]="checkboxId" [binary]="true" [ngModel]="completed" (onChange)="onCheck($event)" />
+  </div>
+
+  <div class="task-content">
+    <div class="task-top">
+      <label [for]="checkboxId" class="task-title">{{ title }}</label>
+      <span class="priority-badge" [ngClass]="priorityClass">{{ priorityLabels[priority] }}</span>
+      @if (category) {
+        <p-tag [value]="category" severity="secondary" [rounded]="true" />
+      }
+    </div>
+
+    @if (description) {
+      <p class="task-description">{{ description }}</p>
+    }
+
+    <div class="task-meta">
+      <span>
+        <i class="pi pi-calendar"></i>
+        {{ completed ? 'Completada' : dueDate ? 'Entrega: ' + (dueDate | date: 'd MMM y') : 'Sin fecha' }}
+      </span>
+      @if (vencida) {
+        <span class="task-overdue"><i class="pi pi-exclamation-triangle"></i> Vencida</span>
+      }
+    </div>
+  </div>
+
+  <div class="task-actions">
+    <button pButton type="button" icon="pi pi-pencil" [text]="true" [rounded]="true" severity="secondary" title="Editar" [attr.aria-label]="'Editar ' + title" (click)="editar()"></button>
+    <button pButton type="button" icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" title="Eliminar" [attr.aria-label]="'Eliminar ' + title" (click)="eliminar()"></button>
+  </div>
+</article>

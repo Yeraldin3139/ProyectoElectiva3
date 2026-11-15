@@ -1,0 +1,92 @@
+<div class="home">
+  <!-- ===== Portada ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Colón (Génova), Nariño</span>
+      <h1>Sombreros con tradición colombiana</h1>
+      <p>
+        Vueltiaos, vaqueros y bosalinos para el trabajo, la fiesta y el día a día. Conoce nuestros
+        {{ totalModelos() }} modelos o diseña el tuyo.
+      </p>
+      <div class="hero-actions">
+        <a pButton routerLink="/catalogo" icon="pi pi-th-large" label="Ver catálogo" size="large"></a>
+        <a pButton routerLink="/disena" icon="pi pi-pencil" label="Diseña tu sombrero" size="large" [outlined]="true" class="btn-light"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Estilos ===== -->
+  <section class="section">
+    <div class="section-inner">
+      <header class="section-header">
+        <span class="eyebrow">Encuentra tu estilo</span>
+        <h2>Tres estilos, un mismo origen</h2>
+      </header>
+
+      <div class="styles-grid">
+        <a
+          class="style-card"
+          *ngFor="let estilo of estilos()"
+          routerLink="/catalogo"
+          [queryParams]="{ estilo: estilo.id }"
+        >
+          <img [src]="estilo.foto" [alt]="'Sombrero estilo ' + estilo.label" loading="lazy" />
+          <span class="style-info">
+            <strong>{{ estilo.label }}</strong>
+            <span>{{ estilo.description }}</span>
+            <small>{{ estilo.cantidad }} {{ estilo.cantidad === 1 ? 'modelo' : 'modelos' }} →</small>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Destacados ===== -->
+  <section class="section section-white">
+    <div class="section-inner">
+      <header class="section-header row">
+        <div>
+          <span class="eyebrow">Los favoritos</span>
+          <h2>Modelos destacados</h2>
+        </div>
+        <a pButton routerLink="/catalogo" label="Ver todos" icon="pi pi-arrow-right" iconPos="right" [text]="true"></a>
+      </header>
+
+      <div class="featured-grid">
+        <a class="hat-card" *ngFor="let sombrero of destacados()" [routerLink]="['/producto', sombrero.id]">
+          <span class="hat-photo">
+            <img [src]="foto(sombrero)" [alt]="sombrero.name" loading="lazy" />
+          </span>
+          <span class="hat-body">
+            <p-tag [value]="estiloLabel(sombrero)" severity="secondary" [rounded]="true" />
+            <strong>{{ sombrero.name }}</strong>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Diseñador ===== -->
+  <section class="section">
+    <div class="section-inner designer-cta">
+      <img src="sombreros/vaquero-bicolor-1-sm.webp" alt="Sombrero vaquero bicolor con cinta roja" loading="lazy" />
+      <div>
+        <span class="eyebrow">Nuevo</span>
+        <h2>Diseña tu propio sombrero</h2>
+        <p>Escoge el color de la cinta, el ancho del ala y escribe un nombre para el grabado. Mira el resultado al instante.</p>
+        <a pButton routerLink="/disena" icon="pi pi-pencil" label="Empezar a diseñar"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Razones ===== -->
+  <section class="section section-white">
+    <div class="section-inner reasons">
+      <article *ngFor="let razon of razones">
+        <i [class]="razon.icono"></i>
+        <h3>{{ razon.titulo }}</h3>
+        <p>{{ razon.texto }}</p>
+      </article>
+    </div>
+  </section>
+</div>

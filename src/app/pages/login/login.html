@@ -1,0 +1,73 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-photo" aria-hidden="true">
+      <img src="sombreros/vaquero-blanco-cuero-1.webp" alt="" />
+      <div class="photo-caption">
+        <span>Somos Colón</span>
+        <strong>Panel de gestión</strong>
+      </div>
+    </div>
+
+    <div class="login-body">
+      <img src="logo-somos-colon.png" alt="Logo Somos Colón" class="login-logo" />
+
+      @if (auth.autenticado()) {
+        <h1>Hola, {{ auth.usuario() }}</h1>
+        <p class="lead">Ya tienes una sesión iniciada.</p>
+        <div class="session-actions">
+          <a pButton routerLink="/tareas" icon="pi pi-briefcase" label="Ir al panel"></a>
+          <button pButton type="button" severity="secondary" [outlined]="true" icon="pi pi-sign-out" label="Cerrar sesión" (click)="salir()"></button>
+        </div>
+      } @else {
+        <h1>Ingresar</h1>
+        <p class="lead">Accede al panel de tareas y pendientes de la tienda.</p>
+
+        <form [formGroup]="form" (ngSubmit)="ingresar()" novalidate class="login-form">
+          <div class="field">
+            <label for="usuario">Usuario</label>
+            <p-iconfield>
+              <p-inputicon styleClass="pi pi-user" />
+              <input
+                pInputText
+                id="usuario"
+                formControlName="usuario"
+                autocomplete="username"
+                placeholder="Tu usuario"
+                [invalid]="invalido('usuario')"
+                fluid
+              />
+            </p-iconfield>
+            @if (invalido('usuario')) {
+              <small class="field-error">Escribe el usuario.</small>
+            }
+          </div>
+
+          <div class="field">
+            <label for="clave">Clave</label>
+            <p-password
+              inputId="clave"
+              formControlName="clave"
+              [feedback]="false"
+              [toggleMask]="true"
+              autocomplete="current-password"
+              placeholder="Tu clave"
+              [invalid]="invalido('clave')"
+              [fluid]="true"
+            />
+            @if (invalido('clave')) {
+              <small class="field-error">Escribe la clave.</small>
+            }
+          </div>
+
+          @if (error()) {
+            <p-message severity="error" icon="pi pi-exclamation-circle" [text]="error()" />
+          }
+
+          <button pButton type="submit" icon="pi pi-sign-in" label="Ingresar" [fluid]="true"></button>
+        </form>
+      }
+
+      <a routerLink="/" class="back-link"><i class="pi pi-arrow-left"></i> Volver a la tienda</a>
+    </div>
+  </div>
+</div>

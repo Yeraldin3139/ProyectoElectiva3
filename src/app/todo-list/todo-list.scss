@@ -1,0 +1,42 @@
+// Estilos propios de Pendientes. Las piezas compartidas
+// (panel, tarjetas, filtros, campos) están en src/styles.scss.
+
+.form-panel {
+  margin-bottom: 20px;
+  border-top: 4px solid var(--sc-secondary);
+  transition: border-color 0.2s ease;
+
+  &.editing {
+    border-top-color: var(--sc-accent);
+  }
+}
+
+.task-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.field-description,
+.form-actions {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+@media (max-width: 900px) {
+  .task-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .field-title,
+  .field-description,
+  .form-actions {
+    grid-column: 1 / -1;
+  }
+}

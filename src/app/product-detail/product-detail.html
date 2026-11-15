@@ -1,14 +1,69 @@
-<section class="product-detail" aria-labelledby="detail-title">
-  <div class="product-image">
-    <img src="https://placehold.co/800x700?text=Producto" alt="Imagen ampliada del producto">
-  </div>
-  <div class="product-copy">
-    <p class="eyebrow">Catálogo / Categoría</p>
-    <h1 id="detail-title">Nombre del producto</h1>
-    <p class="detail-price">$49.99</p>
-    <p class="description">Descripción breve del producto. Aquí se pueden presentar sus características principales, materiales y detalles de uso.</p>
-    <p class="availability">Disponibilidad: en existencia</p>
-    <button type="button">Comprar</button>
-  </div>
-</section>
+<div class="detail-page">
+  <div class="detail-inner">
+    <p-breadcrumb [model]="breadcrumb()" [home]="inicio" />
 
+    @if (product(); as p) {
+      <section class="detail-content">
+        <div class="gallery">
+          <p-galleria
+            [value]="imagenes()"
+            [numVisible]="4"
+            [circular]="true"
+            [showItemNavigators]="imagenes().length > 1"
+            [showThumbnails]="imagenes().length > 1"
+            [showThumbnailNavigators]="imagenes().length > 4"
+          >
+            <ng-template #item let-foto>
+              <img [src]="foto.src" [alt]="foto.alt" class="gallery-main" />
+            </ng-template>
+            <ng-template #thumbnail let-foto>
+              <img [src]="foto.thumb" [alt]="foto.alt" class="gallery-thumb" />
+            </ng-template>
+          </p-galleria>
+        </div>
+
+        <div class="info">
+          <div class="tags">
+            <p-tag [value]="estilo(p)" [rounded]="true" />
+            <p-tag [value]="tonos[p.tone]" severity="secondary" [rounded]="true" />
+          </div>
+          <h1>{{ p.name }}</h1>
+          <p class="description">{{ p.description }}</p>
+
+          <h2>Características</h2>
+          <ul class="features">
+            @for (caracteristica of p.features; track caracteristica) {
+              <li><i class="pi pi-check-circle"></i> {{ caracteristica }}</li>
+            }
+          </ul>
+
+          <div class="actions">
+            <a pButton routerLink="/disena" [queryParams]="{ modelo: p.id }" icon="pi pi-pencil" label="Personalizar este sombrero"></a>
+            <button pButton type="button" icon="pi pi-comments" label="Preguntar por este modelo" [outlined]="true" (click)="irAContacto()"></button>
+          </div>
+        </div>
+      </section>
+
+      @if (relacionados().length > 0) {
+        <section class="related">
+          <h2>Otros sombreros estilo {{ estilo(p) }}</h2>
+          <div class="related-grid">
+            @for (otro of relacionados(); track otro.id) {
+              <a class="related-card" [routerLink]="['/producto', otro.id]">
+                <img [src]="foto(otro)" [alt]="otro.name" loading="lazy" />
+                <span>{{ otro.name }}</span>
+              </a>
+            }
+          </div>
+        </section>
+      }
+    } @else {
+      <section class="not-found">
+        <i class="pi pi-question-circle"></i>
+        <h1>Sombrero no encontrado</h1>
+        <p>El modelo que buscas no existe o fue retirado del catálogo.</p>
+        <a pButton routerLink="/catalogo" icon="pi pi-arrow-left" label="Volver al catálogo"></a>
+      </section>
+    }
+  </div>
+</div>

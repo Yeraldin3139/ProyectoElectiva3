@@ -1,25 +1,48 @@
-<section class="product-section" id="productos" aria-labelledby="products-title">
-  <div class="section-heading">
-    <h2 id="products-title">Productos destacados</h2>
-    <p>Explora nuestra selección del catálogo.</p>
-  </div>
+<section class="product-section" aria-live="polite">
+  <p class="results-count">
+    {{ filteredProducts().length }} {{ filteredProducts().length === 1 ? 'modelo' : 'modelos' }}
+  </p>
 
-  <div class="product-grid">
-    <article class="product-card">
-      <img src="https://placehold.co/480x360?text=Producto+1" alt="Imagen del Producto uno">
-      <div class="product-info"><h3>Producto uno</h3><p class="price">$29.99</p><button type="button">Ver producto</button></div>
-    </article>
-    <article class="product-card">
-      <img src="https://placehold.co/480x360?text=Producto+2" alt="Imagen del Producto dos">
-      <div class="product-info"><h3>Producto dos</h3><p class="price">$42.50</p><button type="button">Ver producto</button></div>
-    </article>
-    <article class="product-card">
-      <img src="https://placehold.co/480x360?text=Producto+3" alt="Imagen del Producto tres">
-      <div class="product-info"><h3>Producto tres</h3><p class="price">$18.00</p><button type="button">Ver producto</button></div>
-    </article>
-    <article class="product-card">
-      <img src="https://placehold.co/480x360?text=Producto+4" alt="Imagen del Producto cuatro">
-      <div class="product-info"><h3>Producto cuatro</h3><p class="price">$56.90</p><button type="button">Ver producto</button></div>
-    </article>
-  </div>
+  @if (filteredProducts().length > 0) {
+    <div class="product-grid">
+      @for (product of filteredProducts(); track product.id) {
+        <article class="product-card">
+          <a [routerLink]="['/producto', product.id]" class="product-image" [attr.aria-label]="'Ver ' + product.name">
+            <img [src]="foto(product)" [alt]="product.name" loading="lazy" />
+            @if (product.images.length > 1) {
+              <span class="photo-count"><i class="pi pi-images"></i> {{ product.images.length }}</span>
+            }
+          </a>
+
+          <div class="product-info">
+            <p-tag [value]="getCategoryLabel(product)" severity="secondary" [rounded]="true" />
+            <h3 class="product-name">
+              <a [routerLink]="['/producto', product.id]">{{ product.name }}</a>
+            </h3>
+            <p class="product-description">{{ product.description }}</p>
+
+            <div class="product-actions">
+              <a pButton [routerLink]="['/producto', product.id]" label="Ver modelo" size="small" [outlined]="true"></a>
+              <a
+                pButton
+                routerLink="/disena"
+                [queryParams]="{ modelo: product.id }"
+                icon="pi pi-pencil"
+                size="small"
+                [text]="true"
+                [attr.aria-label]="'Personalizar ' + product.name"
+                title="Personalizar"
+              ></a>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  } @else {
+    <div class="no-products">
+      <i class="pi pi-search"></i>
+      <p>No encontramos sombreros con esos filtros.</p>
+      <button pButton type="button" label="Ver todos los sombreros" icon="pi pi-filter-slash" (click)="limpiar.emit()"></button>
+    </div>
+  }
 </section>

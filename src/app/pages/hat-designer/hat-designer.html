@@ -1,0 +1,136 @@
+<div class="designer-page">
+  <div class="designer-inner">
+    <header class="designer-header">
+      <span class="eyebrow">Hazlo tuyo</span>
+      <h1>Diseña tu sombrero</h1>
+      <p>Elige el tono, la cinta, el ancho del ala y escribe un nombre para el grabado. La vista previa cambia mientras diseñas.</p>
+    </header>
+
+    <div class="designer-layout">
+      <!-- ===== Vista previa ===== -->
+      <section class="preview" aria-label="Vista previa del sombrero">
+        <svg class="hat" viewBox="0 0 320 200" role="img" [attr.aria-label]="'Sombrero ' + tono().nombre + ' con cinta ' + colorCinta()">
+          <ellipse cx="160" cy="186" rx="120" ry="8" fill="rgba(36,18,5,0.12)" />
+          <ellipse cx="160" cy="150" [attr.rx]="anchoAla()" ry="22" [attr.fill]="tono().ala" stroke="rgba(0,0,0,0.25)" stroke-width="2" />
+          <rect x="108" y="62" width="104" height="90" rx="36" [attr.fill]="tono().copa" stroke="rgba(0,0,0,0.25)" stroke-width="2" />
+          <path d="M116 80h88M112 96h96" stroke="rgba(0,0,0,0.12)" stroke-width="2" />
+          <rect x="108" y="118" width="104" height="20" [attr.fill]="colorCinta()" />
+          <text x="160" y="132" text-anchor="middle" class="hat-text">{{ grabado() }}</text>
+        </svg>
+
+        <div class="preview-summary">
+          <p-tag [value]="'Tono ' + tono().nombre" severity="secondary" [rounded]="true" />
+          <p-tag [value]="'Ala ' + anchoAla() + ' px'" severity="secondary" [rounded]="true" />
+          @if (grabado()) {
+            <p-tag [value]="'Grabado: ' + grabado()" [rounded]="true" />
+          }
+        </div>
+
+        @if (modelo(); as m) {
+          <a class="base-model" [routerLink]="['/producto', m.id]">
+            <img [src]="fotoModelo()" [alt]="m.name" />
+            <span>
+              <small>Basado en</small>
+              <strong>{{ m.name }}</strong>
+            </span>
+          </a>
+        }
+      </section>
+
+      <!-- ===== Controles (FormControl) ===== -->
+      <section class="controls" aria-label="Opciones del diseño">
+        <div class="field">
+          <label for="modelo">Modelo base (opcional)</label>
+          <p-select
+            inputId="modelo"
+            [formControl]="modeloCtrl"
+            [options]="modelos()"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Diseño libre"
+            [showClear]="true"
+            [filter]="true"
+            filterPlaceholder="Buscar modelo"
+            [fluid]="true"
+          />
+        </div>
+
+        <div class="field">
+          <span class="field-label">Tono del sombrero</span>
+          <div class="swatches">
+            <button
+              *ngFor="let t of tonos"
+              type="button"
+              class="swatch"
+              [style.background]="t.copa"
+              [class.selected]="t.nombre === tono().nombre"
+              [attr.aria-label]="'Tono ' + t.nombre"
+              [title]="t.nombre"
+              (click)="elegirTono(t.nombre)"
+            ></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-label">Color de la cinta</span>
+          <div class="swatches">
+            <button
+              *ngFor="let c of coloresCinta"
+              type="button"
+              class="swatch"
+              [style.background]="c.valor"
+              [class.selected]="c.valor === colorCinta()"
+              [attr.aria-label]="'Cinta ' + c.nombre"
+              [title]="c.nombre"
+              (click)="elegirColor(c.valor)"
+            ></button>
+            <label class="swatch custom" title="Otro color">
+              <i class="pi pi-palette"></i>
+              <input type="color" [formControl]="colorCtrl" aria-label="Elegir otro color de cinta" />
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="ancho">Ancho del ala: <strong>{{ anchoAla() }} px</strong></label>
+          <p-slider [formControl]="widthCtrl" [min]="70" [max]="150" ariaLabel="Ancho del ala" class="slider" />
+          <span class="box" [style.width.px]="anchoAla()"></span>
+        </div>
+
+        <div class="field">
+          <label for="grabado">Nombre para el grabado</label>
+          <input pInputText id="grabado" [formControl]="nameCtrl" maxlength="14" placeholder="Ej. Yeraldin" [fluid]="true" />
+          <small class="error-message" [class.show]="nameCtrl.invalid && nameCtrl.touched">
+            Escribe entre 3 y 14 caracteres.
+          </small>
+        </div>
+
+        <div class="buttons">
+          <button pButton type="button" icon="pi pi-refresh" label="Reiniciar" severity="secondary" [outlined]="true" (click)="reiniciar()"></button>
+          <button pButton type="button" icon="pi pi-save" label="Guardar diseño" (click)="verForm()"></button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== Mis diseños (signal + *ngFor) ===== -->
+    @if (disenos().length > 0) {
+      <section class="saved">
+        <h2>Mis diseños</h2>
+        <div class="saved-grid">
+          <article class="saved-card" *ngFor="let d of disenos()">
+            <span class="saved-colors">
+              <span [style.background]="colorDeTono(d.tono)"></span>
+              <span [style.background]="d.cinta"></span>
+            </span>
+            <span class="saved-info">
+              <strong>{{ d.grabado }}</strong>
+              <small>{{ d.modelo }} · Tono {{ d.tono }} · Ala {{ d.ala }} px</small>
+            </span>
+            <button pButton type="button" icon="pi pi-upload" [text]="true" [rounded]="true" title="Cargar" [attr.aria-label]="'Cargar diseño ' + d.grabado" (click)="cargar(d)"></button>
+            <button pButton type="button" icon="pi pi-trash" severity="danger" [text]="true" [rounded]="true" title="Eliminar" [attr.aria-label]="'Eliminar diseño ' + d.grabado" (click)="eliminar(d)"></button>
+          </article>
+        </div>
+      </section>
+    }
+  </div>
+</div>

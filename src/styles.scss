@@ -1,1 +1,360 @@
-/* You can add global styles to this file, and also import other style files */
+/* =========================================================
+   ESTILOS GLOBALES · Somos Colón
+   Variables de color, reset básico y piezas compartidas.
+   Los controles (botones, campos, selects, etc.) son de PrimeNG
+   con el tema definido en src/app/theme.ts.
+========================================================== */
+
+:root {
+  --sc-primary: #8b4513;
+  --sc-primary-dark: #6f370f;
+  --sc-primary-soft: #f6ece3;
+  --sc-secondary: #d4a574;
+  --sc-accent: #2c5f2d;
+  --sc-accent-soft: #e5f0e4;
+  --sc-cream: #f5f1eb;
+  --sc-surface: #ffffff;
+  --sc-text: #2b2420;
+  --sc-muted: #6f655d;
+  --sc-border: #e8dfd5;
+  --sc-danger: #b3261e;
+
+  --sc-high: #b3261e;
+  --sc-high-bg: #fdecea;
+  --sc-medium: #8a5a00;
+  --sc-medium-bg: #fff3d6;
+  --sc-low: #2c5f2d;
+  --sc-low-bg: #e5f0e4;
+
+  --sc-radius: 14px;
+  --sc-shadow: 0 8px 24px rgba(74, 44, 23, 0.08);
+}
+
+/* ---------- Reset básico ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--sc-cream);
+  color: var(--sc-text);
+}
+
+img {
+  max-width: 100%;
+}
+
+/* Botones de PrimeNG usados como enlaces (<a pButton>) sin subrayado */
+a.p-button {
+  text-decoration: none;
+}
+
+/* ---------- Contenedores de página ---------- */
+.page-bg {
+  background: var(--sc-cream);
+  min-height: 70vh;
+}
+
+.page-shell {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+}
+
+.page-hero {
+  margin-bottom: 28px;
+
+  h1 {
+    margin: 6px 0 8px;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    color: var(--sc-primary);
+  }
+
+  p {
+    margin: 0;
+    max-width: 720px;
+    color: var(--sc-muted);
+    line-height: 1.6;
+  }
+}
+
+.eyebrow {
+  color: var(--sc-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.panel {
+  background: var(--sc-surface);
+  border: 1px solid var(--sc-border);
+  border-radius: var(--sc-radius);
+  box-shadow: var(--sc-shadow);
+  padding: 24px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+
+  h2 {
+    margin: 4px 0 0;
+    font-size: 1.35rem;
+  }
+}
+
+.text-link {
+  color: var(--sc-primary);
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* ---------- Campos de formulario (etiqueta + control PrimeNG) ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label,
+  .field-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+}
+
+.field-error {
+  color: var(--sc-danger);
+  font-size: 0.8rem;
+}
+
+/* ---------- Resumen ---------- */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.summary-card {
+  background: var(--sc-surface);
+  border: 1px solid var(--sc-border);
+  border-top: 4px solid var(--sc-secondary);
+  border-radius: var(--sc-radius);
+  padding: 18px 20px;
+  box-shadow: var(--sc-shadow);
+
+  &.is-pending {
+    border-top-color: var(--sc-primary);
+  }
+
+  &.is-done {
+    border-top-color: var(--sc-accent);
+  }
+}
+
+.summary-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.summary-label {
+  color: var(--sc-muted);
+}
+
+/* ---------- Filtros con [ngClass] (Book Angular · Clase 4b) ---------- */
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  border: 1px solid var(--sc-border);
+  background: var(--sc-surface);
+  color: var(--sc-muted);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--sc-primary);
+    color: var(--sc-primary);
+  }
+
+  &.active {
+    background: var(--sc-primary);
+    border-color: var(--sc-primary);
+    color: #fff;
+  }
+}
+
+/* ---------- Tarjeta de tarea (Pendientes e ItemTask) ---------- */
+.task-list {
+  display: grid;
+  gap: 12px;
+}
+
+.task-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: start;
+  padding: 16px 18px;
+  background: var(--sc-surface);
+  border: 1px solid var(--sc-border);
+  border-left: 4px solid var(--sc-secondary);
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(74, 44, 23, 0.08);
+  }
+
+  &.overdue {
+    border-left-color: var(--sc-danger);
+  }
+
+  &.completed {
+    background: #faf8f5;
+    border-left-color: var(--sc-accent);
+    opacity: 0.75;
+
+    .task-title {
+      text-decoration: line-through;
+    }
+  }
+}
+
+.task-check {
+  padding-top: 2px;
+}
+
+.task-content {
+  min-width: 0;
+}
+
+.task-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.task-title {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.task-description {
+  margin: 6px 0;
+  color: var(--sc-muted);
+  line-height: 1.5;
+}
+
+.task-meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--sc-muted);
+
+  .pi {
+    font-size: 0.8rem;
+  }
+}
+
+.task-overdue {
+  color: var(--sc-danger);
+  font-weight: 700;
+}
+
+.task-actions {
+  display: flex;
+  gap: 2px;
+}
+
+.priority-badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.priority-high {
+  background: var(--sc-high-bg);
+  color: var(--sc-high);
+}
+
+.priority-medium {
+  background: var(--sc-medium-bg);
+  color: var(--sc-medium);
+}
+
+.priority-low {
+  background: var(--sc-low-bg);
+  color: var(--sc-low);
+}
+
+.empty-state {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--sc-muted);
+  border: 2px dashed var(--sc-border);
+  border-radius: 12px;
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    padding: 28px 16px 48px;
+  }
+
+  .summary-grid {
+    gap: 8px;
+  }
+
+  .summary-card {
+    padding: 12px;
+  }
+
+  .summary-number {
+    font-size: 1.5rem;
+  }
+
+  .summary-label {
+    font-size: 0.8rem;
+  }
+
+  .task-card {
+    grid-template-columns: auto 1fr;
+  }
+
+  .task-actions {
+    grid-column: 2;
+  }
+}

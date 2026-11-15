@@ -1,16 +1,72 @@
 <header class="site-header">
-  <a class="brand" href="/" aria-label="Inicio del catálogo">Catálogo<span>Digital</span></a>
+  <div class="header-container">
+    <a routerLink="/" class="brand-section" aria-label="Somos Colón, ir al inicio">
+      <img [src]="logo" alt="Logo Somos Colón" class="logo" />
+      <span class="brand-text">
+        <span class="brand-name">{{ marca }}</span>
+        <span class="brand-tagline">Sombreros artesanales</span>
+      </span>
+    </a>
 
-  <nav class="main-menu" aria-label="Navegación principal">
-    <a href="#inicio">Inicio</a>
-    <a href="#productos">Productos</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
+    <button
+      pButton
+      type="button"
+      class="menu-toggle"
+      [text]="true"
+      [icon]="menuAbierto() ? 'pi pi-times' : 'pi pi-bars'"
+      [attr.aria-expanded]="menuAbierto()"
+      aria-controls="menu-principal"
+      aria-label="Abrir menú"
+      (click)="menuAbierto.set(!menuAbierto())"
+    ></button>
 
-  <form class="search" role="search">
-    <label class="visually-hidden" for="catalog-search">Buscar productos</label>
-    <input id="catalog-search" type="search" placeholder="Buscar productos...">
-    <button type="submit">Buscar</button>
-  </form>
+    <div class="header-menu" id="menu-principal" [class.open]="menuAbierto()">
+      <nav class="main-menu" aria-label="Navegación principal">
+        <a
+          *ngFor="let link of enlaces"
+          [routerLink]="link.ruta"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: link.ruta === '/' }"
+          class="nav-link"
+          (click)="cerrarMenu()"
+        >
+          {{ link.texto }}
+        </a>
+        @if (auth.autenticado()) {
+          <a routerLink="/tareas" routerLinkActive="active" class="nav-link" (click)="cerrarMenu()">
+            <i class="pi pi-briefcase"></i> Panel
+          </a>
+        }
+        <a href="#contacto" class="nav-link" (click)="irAContacto($event)">Contacto</a>
+      </nav>
+
+      <form class="search" role="search" (submit)="buscar($event)">
+        <p-iconfield>
+          <p-inputicon styleClass="pi pi-search" />
+          <input
+            pInputText
+            type="search"
+            name="buscar"
+            placeholder="Buscar sombreros…"
+            aria-label="Buscar sombreros"
+            [value]="busqueda()"
+            (input)="onInputBusqueda($event)"
+            (keydown.escape)="limpiarBusqueda()"
+          />
+        </p-iconfield>
+      </form>
+
+      <div class="auth-area">
+        @if (auth.autenticado()) {
+          <span class="user-chip" [title]="'Sesión de ' + auth.usuario()">
+            <span class="user-avatar">{{ auth.inicial() }}</span>
+            {{ auth.usuario() }}
+          </span>
+          <button pButton type="button" class="auth-btn" icon="pi pi-sign-out" label="Salir" [text]="true" (click)="salir()"></button>
+        } @else {
+          <a pButton routerLink="/login" class="auth-btn login-btn" icon="pi pi-sign-in" label="Ingresar" (click)="cerrarMenu()"></a>
+        }
+      </div>
+    </div>
+  </div>
 </header>
-

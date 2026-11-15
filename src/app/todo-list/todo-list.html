@@ -1,0 +1,157 @@
+<div class="page-bg">
+  <div class="page-shell">
+    <header class="page-hero">
+      <span class="eyebrow">Panel de gestión · Pendientes</span>
+      <h1>Pendientes de la sombrerería</h1>
+      <p>
+        Organiza los pedidos, el inventario y las publicaciones de la tienda. Esta lista también se ve,
+        separada en componentes, en <a routerLink="/tareas" class="text-link">Tareas del taller</a>.
+      </p>
+    </header>
+
+    <!-- =========================
+           RESUMEN DE TAREAS
+      ========================== -->
+    <section class="summary-grid" aria-label="Resumen de tareas">
+      <article class="summary-card">
+        <span class="summary-number">{{ total() }}</span>
+        <span class="summary-label">Total</span>
+      </article>
+      <article class="summary-card is-pending">
+        <span class="summary-number">{{ pendingCount() }}</span>
+        <span class="summary-label">Pendientes</span>
+      </article>
+      <article class="summary-card is-done">
+        <span class="summary-number">{{ completedCount() }}</span>
+        <span class="summary-label">Completadas</span>
+      </article>
+    </section>
+
+    <!-- =========================
+           FORMULARIO (FormBuilder)
+      ========================== -->
+    <section class="panel form-panel" [ngClass]="{ editing: editingId() !== null }">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">{{ editingId() !== null ? 'Editando tarea' : 'Nueva tarea' }}</span>
+          <h2>{{ editingId() !== null ? 'Actualiza los datos' : '¿Qué hay que hacer?' }}</h2>
+        </div>
+      </div>
+
+      <form class="task-form" [formGroup]="todoForm" (ngSubmit)="submitTodoForm()" novalidate>
+        <div class="field field-title">
+          <label for="taskTitle">Título</label>
+          <input pInputText id="taskTitle" placeholder="Ej. Empacar pedido para Bogotá" formControlName="title" [fluid]="true" />
+          @if (hasError('title', 'required')) {
+            <small class="field-error">El título es obligatorio.</small>
+          }
+          @if (hasError('title', 'minlength')) {
+            <small class="field-error">Escribe al menos 3 caracteres.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="priority">Prioridad</label>
+          <p-select inputId="priority" formControlName="priority" [options]="priorityOptions" optionLabel="label" optionValue="value" placeholder="Selecciona…" [fluid]="true" />
+          @if (hasError('priority', 'required')) {
+            <small class="field-error">Elige una prioridad.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="category">Categoría</label>
+          <p-select inputId="category" formControlName="category" [options]="categories" [fluid]="true" />
+        </div>
+
+        <div class="field">
+          <label for="dueDate">Entrega</label>
+          <p-datepicker inputId="dueDate" formControlName="dueDate" dateFormat="dd/mm/yy" [showIcon]="true" [showButtonBar]="true" placeholder="dd/mm/aaaa" [fluid]="true" />
+        </div>
+
+        <div class="field field-description">
+          <label for="description">Descripción (opcional)</label>
+          <textarea pTextarea id="description" rows="2" placeholder="Detalles de la tarea" formControlName="description" [fluid]="true"></textarea>
+        </div>
+
+        <div class="form-actions">
+          @if (editingId() !== null) {
+            <button pButton type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="resetForm()"></button>
+          }
+          <button pButton type="submit" [icon]="editingId() !== null ? 'pi pi-check' : 'pi pi-plus'" [label]="editingId() !== null ? 'Guardar cambios' : 'Agregar tarea'"></button>
+        </div>
+      </form>
+    </section>
+
+    <!-- =========================
+           FILTROS + LISTADO
+      ========================== -->
+    <section class="panel tasks-panel">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Mis tareas</span>
+          <h2>Listado</h2>
+        </div>
+
+        <div class="filters" role="group" aria-label="Filtros de tareas">
+          <button class="filter-chip" type="button" [ngClass]="{ active: filter() === 'all' }" (click)="filter.set('all')">Todas</button>
+          <button class="filter-chip" type="button" [ngClass]="{ active: filter() === 'pending' }" (click)="filter.set('pending')">Pendientes</button>
+          <button class="filter-chip" type="button" [ngClass]="{ active: filter() === 'completed' }" (click)="filter.set('completed')">Completadas</button>
+        </div>
+      </div>
+
+      <div class="task-list">
+        <article
+          class="task-card"
+          *ngFor="let todo of filteredTodos(); index as i; trackBy: trackById"
+          [ngClass]="{ completed: todo.isCompleted, overdue: isOverdue(todo) }"
+        >
+          <div class="task-check">
+            <p-checkbox
+              [inputId]="'todo-' + todo.id"
+              [binary]="true"
+              [ngModel]="!!todo.isCompleted"
+              (onChange)="onChangeCompleted($event, todo)"
+            />
+          </div>
+
+          <div class="task-content">
+            <div class="task-top">
+              <label [for]="'todo-' + todo.id" class="task-title">{{ todo.title }}</label>
+              <span class="priority-badge" [ngClass]="setColorPriority(todo.priority)">{{ priorityLabels[todo.priority] }}</span>
+              <p-tag [value]="todo.category" severity="secondary" [rounded]="true" />
+            </div>
+
+            @if (todo.description) {
+              <p class="task-description">{{ todo.description }}</p>
+            }
+
+            <div class="task-meta">
+              <span>#{{ i + 1 }}</span>
+              <span>
+                <i class="pi pi-calendar"></i>
+                {{ todo.isCompleted ? 'Completada' : todo.dueDate ? 'Entrega: ' + (todo.dueDate | date: 'd MMM y') : 'Sin fecha' }}
+              </span>
+              @if (isOverdue(todo)) {
+                <span class="task-overdue"><i class="pi pi-exclamation-triangle"></i> Vencida</span>
+              }
+            </div>
+          </div>
+
+          <div class="task-actions">
+            <button pButton type="button" icon="pi pi-pencil" [text]="true" [rounded]="true" severity="secondary" title="Editar" [attr.aria-label]="'Editar ' + todo.title" (click)="editTodo(todo)"></button>
+            <button pButton type="button" icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" title="Eliminar" [attr.aria-label]="'Eliminar ' + todo.title" (click)="deleteTodo(todo)"></button>
+          </div>
+        </article>
+
+        @if (filteredTodos().length === 0) {
+          <div class="empty-state">
+            <p>No hay tareas en este filtro.</p>
+            @if (total() === 0) {
+              <button pButton type="button" label="Restaurar tareas de ejemplo" icon="pi pi-replay" [outlined]="true" (click)="restoreExamples()"></button>
+            }
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+</div>
