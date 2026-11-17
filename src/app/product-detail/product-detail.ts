@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -66,14 +65,3 @@ export class ProductDetail {
     document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' });
   }
 }
-=======
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-product-detail',
-  imports: [],
-  templateUrl: './product-detail.html',
-  styleUrl: './product-detail.scss',
-})
-export class ProductDetail {}
->>>>>>> 970751d771931d307a8d7d739c9e5eca2fce287a

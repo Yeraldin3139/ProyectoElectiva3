@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Component, computed, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -35,14 +34,3 @@ export class ProductGrid {
     return this.productService.getCategoryLabel(product.style);
   }
 }
-=======
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-product-grid',
-  imports: [],
-  templateUrl: './product-grid.html',
-  styleUrl: './product-grid.scss',
-})
-export class ProductGrid {}
->>>>>>> 970751d771931d307a8d7d739c9e5eca2fce287a

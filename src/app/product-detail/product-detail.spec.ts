@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
@@ -24,27 +23,5 @@ describe('ProductDetail', () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/producto/999', ProductDetail);
     expect((harness.routeNativeElement as HTMLElement).textContent).toContain('Sombrero no encontrado');
-=======
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ProductDetail } from './product-detail';
-
-describe('ProductDetail', () => {
-  let component: ProductDetail;
-  let fixture: ComponentFixture<ProductDetail>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ProductDetail],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(ProductDetail);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
->>>>>>> 970751d771931d307a8d7d739c9e5eca2fce287a
   });
 });
