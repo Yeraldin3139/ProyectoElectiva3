@@ -26,7 +26,7 @@ export class Header {
   private readonly messages = inject(MessageService);
   readonly auth = inject(AuthService);
 
-  readonly marca = 'Somos Colón';
+  readonly marca = 'Tejidos y Tradición';
   readonly logo = 'logo-somos-colon.png';
   readonly enlaces = [
     { texto: 'Inicio', ruta: '/' },

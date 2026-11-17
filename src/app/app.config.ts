@@ -21,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     ),
     { provide: LOCALE_ID, useValue: 'es-CO' },
 
-    // PrimeNG: tema Aura con los colores de Somos Colón, textos en español
+    // PrimeNG: tema Aura con los colores de Tejidos y Tradición, textos en español
     providePrimeNG({
       ripple: true,
       theme: {

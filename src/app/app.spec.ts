@@ -21,7 +21,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.brand-name')?.textContent).toContain('Somos Colón');
+    expect(compiled.querySelector('.brand-name')?.textContent).toContain('Tejidos y Tradición');
   });
 
   it('should show the store links and the login button', async () => {

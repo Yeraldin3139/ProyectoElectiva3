@@ -3,7 +3,7 @@ import Aura from '@primeuix/themes/aura';
 import { Translation } from 'primeng/api';
 
 /**
- * Tema de PrimeNG con la paleta marrón de Somos Colón.
+ * Tema de PrimeNG con la paleta marrón de Tejidos y Tradición.
  * Parte del tema Aura y solo cambia el color principal.
  */
 export const SomosColonPreset = definePreset(Aura, {

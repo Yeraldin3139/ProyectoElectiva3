@@ -4,26 +4,26 @@ import { authGuard } from './auth/auth.guard';
 
 // Las páginas se cargan bajo demanda (loadComponent) para que la tienda abra más rápido
 export const routes: Routes = [
-  { path: '', component: Home, title: 'Somos Colón · Sombreros artesanales' },
+  { path: '', component: Home, title: 'Tejidos y Tradición · Sombreros artesanales' },
   {
     path: 'catalogo',
     loadComponent: () => import('./catalog/catalog.component').then((m) => m.CatalogComponent),
-    title: 'Catálogo de sombreros · Somos Colón',
+    title: 'Catálogo de sombreros · Tejidos y Tradición',
   },
   {
     path: 'producto/:id',
     loadComponent: () => import('./product-detail/product-detail').then((m) => m.ProductDetail),
-    title: 'Sombrero · Somos Colón',
+    title: 'Sombrero · Tejidos y Tradición',
   },
   {
     path: 'disena',
     loadComponent: () => import('./pages/hat-designer/hat-designer').then((m) => m.HatDesigner),
-    title: 'Diseña tu sombrero · Somos Colón',
+    title: 'Diseña tu sombrero · Tejidos y Tradición',
   },
   {
     path: 'login',
     loadComponent: () => import('./pages/login/login').then((m) => m.Login),
-    title: 'Ingresar · Somos Colón',
+    title: 'Ingresar · Tejidos y Tradición',
   },
 
   // Panel de gestión (requiere iniciar sesión)
@@ -31,13 +31,13 @@ export const routes: Routes = [
     path: 'tareas',
     canActivate: [authGuard],
     loadComponent: () => import('./pages/task-list/task-list').then((m) => m.TaskList),
-    title: 'Tareas del taller · Somos Colón',
+    title: 'Tareas del taller · Tejidos y Tradición',
   },
   {
     path: 'pendientes',
     canActivate: [authGuard],
     loadComponent: () => import('./todo-list/todo-list').then((m) => m.TodoList),
-    title: 'Pendientes · Somos Colón',
+    title: 'Pendientes · Tejidos y Tradición',
   },
 
   { path: 'labs', redirectTo: 'disena' },
