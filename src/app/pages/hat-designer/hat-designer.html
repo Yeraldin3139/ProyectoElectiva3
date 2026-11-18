@@ -98,10 +98,10 @@
         </div>
 
         <div class="field">
-          <label for="grabado">Nombre para el grabado</label>
-          <input pInputText id="grabado" [formControl]="nameCtrl" maxlength="14" placeholder="Ej. Yeraldin" [fluid]="true" />
+          <label for="grabado">Letra para el PIN</label>
+          <input pInputText id="grabado" [formControl]="nameCtrl" maxlength="2" placeholder="Ej. Y A" [fluid]="true" />
           <small class="error-message" [class.show]="nameCtrl.invalid && nameCtrl.touched">
-            Escribe entre 3 y 14 caracteres.
+            Escribe entre 1 y 2 caracteres.
           </small>
         </div>
 
